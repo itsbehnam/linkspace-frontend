@@ -13,6 +13,7 @@
         <li class="py-2"><a href="/" class="hover:text-gray-400">Notifications</a></li>
         <li class="py-2"><a href="/" class="hover:text-gray-400">Messages</a></li>
         <li class="py-2"><a href="/" class="hover:text-gray-400">Settings</a></li>
+        <li class="py-2"><a href="/logout" class="hover:text-gray-400">Logout</a></li>
       </ul>
     </nav>
   </div>
