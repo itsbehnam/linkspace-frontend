@@ -11,8 +11,9 @@
   async function handleLike() {
     loadingLike = true;
     try {
-      await likePost(post.id);
-      post.likes += 1;
+      const updatedPost = await likePost(post.id);
+      post.likes_count = updatedPost.likes_count;
+      post.dislikes_count = updatedPost.dislikes_count;
     } catch (error) {
       console.error('Error liking post:', error);
     } finally {
@@ -23,13 +24,19 @@
   async function handleDislike() {
     loadingDislike = true;
     try {
-      await dislikePost(post.id);
-      post.dislikes += 1;
+      const updatedPost = await dislikePost(post.id);
+      post.likes_count = updatedPost.likes_count;
+      post.dislikes_count = updatedPost.dislikes_count;
     } catch (error) {
       console.error('Error disliking post:', error);
     } finally {
       loadingDislike = false;
     }
+  }
+
+  function handleCommentCreated() {
+    showComments = false;
+    post.comments_count += 1;
   }
 </script>
 
@@ -62,6 +69,6 @@
     </button>
   </div>
   {#if showComments}
-    <Comment postId={post.id} />
+    <Comment postId={post.id} on:commentCreated={handleCommentCreated}/>
   {/if}
 </div>

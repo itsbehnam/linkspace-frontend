@@ -20,15 +20,15 @@
 
     try {
       await createPost({ link, content, liked_by_creator: likedByCreator }, token);
-      link = '';
-      content = '';
-      likedByCreator = null;
       // Optionally, you can emit an event or trigger a reload of the posts
-      dispatch('postCreated');
     } catch (error) {
       errorMessage = 'Error creating post. Please try again.';
     } finally {
+      link = '';
+      content = '';
+      likedByCreator = null;
       loading = false;
+      dispatch('postCreated');
     }
   }
 </script>

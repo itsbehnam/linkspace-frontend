@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   import { createComment } from '$lib/api';
   import { session } from '$lib/stores/session';
   import { get } from 'svelte/store';
@@ -8,6 +9,7 @@
   let content = '';
   let loading = false;
   let errorMessage = '';
+  const dispatch = createEventDispatcher();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -18,11 +20,12 @@
 
     try {
       await createComment(postId, { content });
-      content = '';
     } catch (error) {
       errorMessage = 'Error creating comment. Please try again.';
     } finally {
+      content = '';
       loading = false;
+      dispatch('commentCreated')
     }
   }
 </script>
