@@ -51,7 +51,7 @@
       {#if loading}
         Adding...
       {:else}
-        Add Comment
+        Post
       {/if}
     </button>
   </form>
