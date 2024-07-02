@@ -1,7 +1,50 @@
 <script>
+	import { onMount } from 'svelte';
+	import { get } from 'svelte/store';
+	import { session } from '$lib/stores/session';
+	import { createPost } from '$lib/api';
+	import Post from '$lib/components/Post.svelte';
 	import CreatePost from '$lib/components/CreatePost.svelte';
+	import Waiter from '$lib/Waiter.svelte';
+	import {goto} from '$app/navigation';
+
+	let posts = [];
+	let loading = true;
+
+	async function fetchPosts() {
+		const token = get(session).token;
+		const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/posts`, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+		posts = await response.json();
+		loading = false;
+	}
+
+	onMount(() => {
+		const token = get(session).token;
+		if (!token) {
+			goto('login')
+		} else {
+			fetchPosts();
+			loading = false
+		}
+	});
+
+	async function handlePostCreated() {
+		await fetchPosts();
+	}
 </script>
 
-<div class="container mx-auto px-4 py-8">
-	<CreatePost />
-</div>
+{#if loading}
+	<Waiter message="Loading" />
+{:else}
+	<div class="container mx-auto px-4 py-8">
+		<CreatePost on:postCreated={handlePostCreated} />
+
+		{#each posts as post (post.id)}
+			<Post {post} />
+		{/each}
+	</div>
+{/if}

@@ -5,7 +5,7 @@
 <div class="flex h-screen">
   <!-- Sidebar -->
   <div class="w-1/5 bg-gray-800 p-4 text-white">
-    <div class="text-2xl font-bold mb-4">Logo</div>
+    <div class="text-2xl font-bold mb-4">LinkSpace</div>
     <nav>
       <ul>
         <li class="py-2"><a href="/" class="hover:text-gray-400">Home</a></li>

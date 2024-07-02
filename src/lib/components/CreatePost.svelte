@@ -2,12 +2,14 @@
   import { createPost } from '$lib/api';
   import { session } from '$lib/stores/session';
   import { get } from 'svelte/store';
+  import { createEventDispatcher } from 'svelte';
 
   let link = '';
   let content = '';
   let likedByCreator = null;
   let loading = false;
   let errorMessage = '';
+  const dispatch = createEventDispatcher();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -22,6 +24,7 @@
       content = '';
       likedByCreator = null;
       // Optionally, you can emit an event or trigger a reload of the posts
+      dispatch('postCreated');
     } catch (error) {
       errorMessage = 'Error creating post. Please try again.';
     } finally {
@@ -30,8 +33,7 @@
   }
 </script>
 
-<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-  <h2 class="text-2xl font-bold mb-4">Create Post</h2>
+<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md mb-4">
   <form on:submit|preventDefault={handleSubmit}>
     <div class="mb-4">
       <input
@@ -57,14 +59,14 @@
         class={`px-3 py-2 border rounded-lg ${likedByCreator === true ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
         on:click={() => likedByCreator = true}
       >
-        👍 Like
+        👍
       </button>
       <button
         type="button"
         class={`px-3 py-2 border rounded-lg ${likedByCreator === false ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'}`}
         on:click={() => likedByCreator = false}
       >
-        👎 Dislike
+        👎
       </button>
     </div>
     {#if errorMessage}
@@ -78,7 +80,7 @@
       {#if loading}
         Creating...
       {:else}
-        Create Post
+        Post
       {/if}
     </button>
   </form>

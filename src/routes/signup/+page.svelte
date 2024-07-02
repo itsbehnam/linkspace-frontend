@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
+	import Waiter from '$lib/Waiter.svelte'
 
 	let name = '';
 	let email = '';
