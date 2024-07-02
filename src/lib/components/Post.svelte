@@ -40,13 +40,26 @@
   }
 </script>
 
-<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md mb-4">
-  <p class="text-gray-600 mb-2">{post.content}</p>
-  <p class="text-gray-500 mb-4">{post.link}</p>
+<div class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-md mb-4 text-white">
+  <div class="mb-2">
+    <p class="text-gray-400">
+      <span class="font-semibold">@behnam</span>
+      <span class="text-sm"> • {new Date(post.created_at).toLocaleDateString()}</span>
+    </p>
+  </div>
+  <p class="text-gray-200 mb-4">{post.content}</p>
+  <a class="text-blue-400 mb-4 block" href={post.link} target="_blank">{post.link}</a>
+  <p class="text-gray-400 mb-2 text-sm">
+    {#if post.liked_by_creator === true}
+      <span>👍 Liked by the creator</span>
+    {:else if post.liked_by_creator === false}
+      <span>👎 Disliked by the creator</span>
+    {/if}
+  </p>
   <div class="flex items-center space-x-4">
     <button
       type="button"
-      class="px-3 py-2 border rounded-lg bg-gray-200 text-gray-700"
+      class="px-3 py-2 border rounded-lg bg-gray-700 text-gray-300 hover:bg-gray-600"
       on:click={handleLike}
       disabled={loadingLike}
     >
@@ -54,7 +67,7 @@
     </button>
     <button
       type="button"
-      class="px-3 py-2 border rounded-lg bg-gray-200 text-gray-700"
+      class="px-3 py-2 border rounded-lg bg-gray-700 text-gray-300 hover:bg-gray-600"
       on:click={handleDislike}
       disabled={loadingDislike}
     >
@@ -62,13 +75,13 @@
     </button>
     <button
       type="button"
-      class="px-3 py-2 border rounded-lg bg-gray-200 text-gray-700"
+      class="px-3 py-2 border rounded-lg bg-gray-700 text-gray-300 hover:bg-gray-600"
       on:click={() => showComments = !showComments}
     >
       💬 {post.comments_count}
     </button>
   </div>
   {#if showComments}
-    <Comment postId={post.id} on:commentCreated={handleCommentCreated}/>
+    <Comment postId={post.id} on:commentCreated={handleCommentCreated} />
   {/if}
 </div>

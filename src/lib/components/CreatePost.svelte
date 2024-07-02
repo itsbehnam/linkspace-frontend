@@ -33,14 +33,14 @@
   }
 </script>
 
-<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md mb-4">
+<div class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-md mb-4 text-white">
   <form on:submit|preventDefault={handleSubmit}>
     <div class="mb-4">
       <input
         type="url"
         bind:value={link}
         required
-        class="w-full px-3 py-2 border rounded-lg"
+        class="w-full px-3 py-2 border rounded-lg bg-gray-700 text-white placeholder-gray-400"
         placeholder="Enter a valid URL"
       />
     </div>
@@ -48,7 +48,7 @@
       <textarea
         bind:value={content}
         required
-        class="w-full px-3 py-2 border rounded-lg"
+        class="w-full px-3 py-2 border rounded-lg bg-gray-700 text-white placeholder-gray-400"
         placeholder="Write your comment (max 280 characters)"
         maxlength="280"
       ></textarea>
@@ -56,14 +56,14 @@
     <div class="mb-4 flex items-center space-x-4">
       <button
         type="button"
-        class={`px-3 py-2 border rounded-lg ${likedByCreator === true ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+        class={`px-3 py-2 border rounded-lg ${likedByCreator === true ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300'}`}
         on:click={() => likedByCreator = true}
       >
         👍
       </button>
       <button
         type="button"
-        class={`px-3 py-2 border rounded-lg ${likedByCreator === false ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+        class={`px-3 py-2 border rounded-lg ${likedByCreator === false ? 'bg-red-500 text-white' : 'bg-gray-700 text-gray-300'}`}
         on:click={() => likedByCreator = false}
       >
         👎
