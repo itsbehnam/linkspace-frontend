@@ -1,3 +1,6 @@
+<svelte:head>
+	<title>LinkSpace • Home</title>
+</svelte:head>
 <script>
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';

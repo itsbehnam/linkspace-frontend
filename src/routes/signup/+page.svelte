@@ -1,3 +1,6 @@
+<svelte:head>
+	<title>LinkSpace • Signup</title>
+</svelte:head>
 <script>
 	import { signup } from '$lib/api';
 	import { session } from '$lib/stores/session';

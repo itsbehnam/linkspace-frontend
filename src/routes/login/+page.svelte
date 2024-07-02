@@ -1,3 +1,6 @@
+<svelte:head>
+	<title>LinkSpace • Login</title>
+</svelte:head>
 <script>
 	import { login } from '$lib/api';
 	import { session } from '$lib/stores/session';
