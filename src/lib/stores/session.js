@@ -31,7 +31,7 @@ function createSession() {
 			if (typeof localStorage !== 'undefined') {
 				localStorage.removeItem('session');
 			}
-			set({ user: null, token: null });
+			set({ user_id: null, username: null, token: null });
 		}
 	};
 }

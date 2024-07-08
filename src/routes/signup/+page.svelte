@@ -9,13 +9,13 @@
 	import { get } from 'svelte/store';
 	import Waiter from '$lib/Waiter.svelte'
 
-	let name = '';
+	let username = '';
 	let email = '';
 	let password = '';
 	let loading = true;
 
 	onMount(() => {
-		if (get(session).user) {
+		if (get(session).username) {
 			goto('/');
 		} else {
 			loading = false;
@@ -27,8 +27,8 @@
 		loading = true;
 
 		try {
-			const response = await signup({ name, email, password });
-			session.set({ user: response.user, token: response.token });
+			const response = await signup({ username, email, password });
+			session.set({ user_id: response.user_id, username: response.username, token: response.token });
 			goto('/');
 		} catch (error) {
 			console.error('Error signing up:', error);
@@ -47,10 +47,10 @@
 			<form on:submit|preventDefault={handleSubmit}>
 				<div class="mb-4">
 					<label class="block text-gray-700">
-						Name
+						Username
 						<input
 							type="text"
-							bind:value={name}
+							bind:value={username}
 							required
 							class="w-full px-3 py-2 border rounded-lg"
 						/>

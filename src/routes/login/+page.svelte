@@ -14,7 +14,7 @@
 	let loading = true;
 
 	onMount(() => {
-		if (get(session).user) {
+		if (get(session).username) {
 			goto('/');
 		} else {
 			loading = false;
@@ -26,7 +26,7 @@
 
 		try {
 			const response = await login({ email, password });
-			session.set({ user: response.user, token: response.token });
+			session.set({ user_id: response.user_id, username: response.username, token: response.token });
 			goto('/');
 		} catch (error) {
 			console.error('Error logging in:', error);
