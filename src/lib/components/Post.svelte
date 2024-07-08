@@ -1,6 +1,7 @@
 <script>
   import { likePost, dislikePost } from '$lib/api';
   import Comment from './Comment.svelte';
+  import { formatDistanceToNow, format } from 'date-fns';
 
   export let post;
 
@@ -38,13 +39,31 @@
     showComments = false;
     post.comments_count += 1;
   }
+
+  function formatPostDate(dateString) {
+		const date = new Date(dateString);
+		const now = new Date();
+		const diffInSeconds = (now - date) / 1000;
+
+		// Show X min ago or X days ago
+		if (diffInSeconds < 86400) { // Less than 1 day
+			return `${formatDistanceToNow(date)} ago`;
+		}
+
+		// If older than a day, show the datetime
+		return format(date, "yyyy-MM-dd HH:mm");
+	}
+
 </script>
 
 <div class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-md mb-4 text-white">
   <div class="mb-2">
     <p class="text-gray-400">
-      <span class="font-semibold">@behnam</span>
-      <span class="text-sm"> • {new Date(post.created_at).toLocaleDateString()}</span>
+      <span class="font-semibold">@{post.creator_username}</span>
+      <span class="text-sm"> • {formatPostDate(post.updated_at)}</span>
+      {#if post.edited}
+        <span class="text-sm text-yellow-400 ml-2">Edited</span>
+      {/if}
     </p>
   </div>
   <p class="text-gray-200 mb-4">{post.content}</p>

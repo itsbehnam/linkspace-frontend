@@ -5,7 +5,6 @@
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import { session } from '$lib/stores/session';
-	import { createPost } from '$lib/api';
 	import Post from '$lib/components/Post.svelte';
 	import CreatePost from '$lib/components/CreatePost.svelte';
 	import Waiter from '$lib/Waiter.svelte';
@@ -21,10 +20,16 @@
 				Authorization: `Bearer ${token}`
 			}
 		});
-		posts = await response.json();
+
+		if (response.ok) {
+			const data = await response.json();
+			posts = data.data;
+		} else {
+			console.error('Failed to fetch posts:', response.statusText);
+		}
+
 		loading = false;
 	}
-
 	onMount(() => {
 		const token = get(session).token;
 		if (!token) {
