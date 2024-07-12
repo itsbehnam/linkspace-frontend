@@ -68,13 +68,6 @@
   </div>
   <p class="text-gray-200 mb-4">{post.content}</p>
   <a class="text-blue-400 mb-4 block" href={post.link} target="_blank">{post.link}</a>
-  <p class="text-gray-400 mb-2 text-sm">
-    {#if post.liked_by_creator === true}
-      <span>👍 Liked by the creator</span>
-    {:else if post.liked_by_creator === false}
-      <span>👎 Disliked by the creator</span>
-    {/if}
-  </p>
   <div class="flex items-center space-x-4">
     <button
       type="button"

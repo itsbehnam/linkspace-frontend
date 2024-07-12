@@ -6,7 +6,6 @@
 
   let link = '';
   let content = '';
-  let likedByCreator = null;
   let loading = false;
   let errorMessage = '';
   const dispatch = createEventDispatcher();
@@ -19,14 +18,13 @@
     const token = get(session).token;
 
     try {
-      await createPost({ link, content, liked_by_creator: likedByCreator }, token);
+      await createPost({ link, content }, token);
       // Optionally, you can emit an event or trigger a reload of the posts
     } catch (error) {
       errorMessage = 'Error creating post. Please try again.';
     } finally {
       link = '';
       content = '';
-      likedByCreator = null;
       loading = false;
       dispatch('postCreated');
     }
@@ -52,22 +50,6 @@
         placeholder="Write your comment (max 280 characters)"
         maxlength="280"
       ></textarea>
-    </div>
-    <div class="mb-4 flex items-center space-x-4">
-      <button
-        type="button"
-        class={`px-3 py-2 border rounded-lg ${likedByCreator === true ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300'}`}
-        on:click={() => likedByCreator = true}
-      >
-        👍
-      </button>
-      <button
-        type="button"
-        class={`px-3 py-2 border rounded-lg ${likedByCreator === false ? 'bg-red-500 text-white' : 'bg-gray-700 text-gray-300'}`}
-        on:click={() => likedByCreator = false}
-      >
-        👎
-      </button>
     </div>
     {#if errorMessage}
       <p class="text-red-500 mb-4">{errorMessage}</p>
