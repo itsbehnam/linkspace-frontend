@@ -1,7 +1,8 @@
 import { writable } from 'svelte/store';
+import { get } from 'svelte/store';
 
 function createSession() {
-	let initialData = { user: null, token: null };
+	let initialData = { user_id: null, username: null, token: null, email_verified: null };
 
 	if (typeof localStorage !== 'undefined') {
 		const storedSession = localStorage.getItem('session');

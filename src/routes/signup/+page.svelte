@@ -8,12 +8,13 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
-	import Waiter from '$lib/Waiter.svelte'
+	import Waiter from '$lib/Waiter.svelte';
 
 	let username = '';
 	let email = '';
 	let password = '';
 	let loading = true;
+	let showVerificationNotice = false;
 
 	onMount(() => {
 		if (get(session).username) {
@@ -29,8 +30,18 @@
 
 		try {
 			const response = await signup({ username, email, password });
-			session.set({ user_id: response.user_id, username: response.username, token: response.token });
-			goto('/');
+			session.set({
+				user_id: response.user_id,
+				username: response.username,
+				token: response.token,
+				email_verified: response.email_verified
+			});
+			
+			if (response.email_verified) {
+				goto('/');
+			} else {
+				showVerificationNotice = true;
+			}
 		} catch (error) {
 			console.error('Error signing up:', error);
 		} finally {
@@ -42,6 +53,14 @@
 {#if loading}
 	<div class="min-h-screen flex items-center justify-center">
 		<Waiter message="Loading..." />
+	</div>
+{:else if showVerificationNotice}
+	<div class="min-h-screen flex flex-col items-center justify-center bg-base-200">
+		<div class="text-center">
+			<h1 class="text-5xl font-bold mb-4">Verify Your Email</h1>
+			<p class="py-6">A verification email has been sent to {email}. Please check your inbox and click on the verification link to complete your registration.</p>
+			<button class="btn btn-primary mt-4" on:click={() => goto('/')}>Go to Homepage</button>
+		</div>
 	</div>
 {:else}
 	<div class="hero min-h-screen bg-base-200">
