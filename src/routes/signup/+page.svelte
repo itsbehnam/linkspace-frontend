@@ -1,6 +1,7 @@
 <svelte:head>
 	<title>LinkSpace • Signup</title>
 </svelte:head>
+
 <script>
 	import { signup } from '$lib/api';
 	import { session } from '$lib/stores/session';
@@ -39,55 +40,66 @@
 </script>
 
 {#if loading}
-	<div>Loading...</div>
+	<div class="min-h-screen flex items-center justify-center">
+		<Waiter message="Loading..." />
+	</div>
 {:else}
-	<div class="min-h-screen flex items-center justify-center bg-gray-100">
-		<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-			<h2 class="text-2xl font-bold mb-4">Sign Up</h2>
-			<form on:submit|preventDefault={handleSubmit}>
-				<div class="mb-4">
-					<label class="block text-gray-700">
-						Username
+	<div class="hero min-h-screen bg-base-200">
+		<div class="hero-content flex-col lg:flex-row-reverse">
+			<div class="text-center lg:text-left">
+				<h1 class="text-5xl font-bold">Sign up now!</h1>
+				<p class="py-6">Join LinkSpace and start connecting with your community today.</p>
+			</div>
+			<div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+				<form on:submit|preventDefault={handleSubmit} class="card-body">
+					<div class="form-control">
+						<label class="label" for="username">
+							<span class="label-text">Username</span>
+						</label>
 						<input
 							type="text"
+							id="username"
+							placeholder="username"
 							bind:value={username}
 							required
-							class="w-full px-3 py-2 border rounded-lg"
+							class="input input-bordered"
 						/>
-					</label>
-				</div>
-				<div class="mb-4">
-					<label class="block text-gray-700">
-						Email
+					</div>
+					<div class="form-control">
+						<label class="label" for="email">
+							<span class="label-text">Email</span>
+						</label>
 						<input
 							type="email"
+							id="email"
+							placeholder="email"
 							bind:value={email}
 							required
-							class="w-full px-3 py-2 border rounded-lg"
+							class="input input-bordered"
 						/>
-					</label>
-				</div>
-				<div class="mb-4">
-					<label class="block text-gray-700">
-						Password
+					</div>
+					<div class="form-control">
+						<label class="label" for="password">
+							<span class="label-text">Password</span>
+						</label>
 						<input
 							type="password"
+							id="password"
+							placeholder="password"
 							bind:value={password}
 							required
-							class="w-full px-3 py-2 border rounded-lg"
+							class="input input-bordered"
 						/>
-					</label>
+					</div>
+					<div class="form-control mt-6">
+						<button type="submit" class="btn btn-primary" disabled={loading}>
+							{loading ? 'Signing up...' : 'Sign Up'}
+						</button>
+					</div>
+				</form>
+				<div class="text-center mb-4">
+					<p>Already have an account? <a href="/login" class="link link-primary">Login here</a></p>
 				</div>
-				<button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg"> Sign Up </button>
-			</form>
-
-			{#if loading}
-				<div class="mt-4">
-					<Waiter message="Signing up..." />
-				</div>
-			{/if}
-			<div class="mt-4 text-center">
-				<p>Already have an account? <a href="/login" class="text-blue-500">Login here</a></p>
 			</div>
 		</div>
 	</div>

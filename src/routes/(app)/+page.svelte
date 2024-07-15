@@ -6,7 +6,6 @@
 	import { get } from 'svelte/store';
 	import { session } from '$lib/stores/session';
 	import Post from '$lib/components/Post.svelte';
-	import CreatePost from '$lib/components/CreatePost.svelte';
 	import Waiter from '$lib/Waiter.svelte';
 	import {goto} from '$app/navigation';
 
@@ -49,8 +48,6 @@
 	<Waiter message="Loading" />
 {:else}
 	<div class="container mx-auto px-4 py-8">
-		<CreatePost on:postCreated={handlePostCreated} />
-
 		{#each posts as post (post.id)}
 			<Post {post} />
 		{/each}
